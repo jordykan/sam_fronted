@@ -1,7 +1,7 @@
 <template>
   <v-layout align-start>
     <v-flex>
-        <h3>Mi Perfil</h3>
+        <h3>En construcción</h3>
     </v-flex>
   </v-layout>
 </template>
