@@ -4,12 +4,13 @@
        
         <v-flex xs12 sm8 md6 lg5 x14>
               <v-flex xs12>
-        <v-img
-          :src="require('../assets/sam_login.png')"
-          class="my-1"
-          contain
-          height="170"
-        ></v-img><br><br>
+       <v-img
+                      class="white--text align-end"
+                      height="160px"
+                      src="https://i.ibb.co/c1t6rr0/sam-login.png"
+                    >
+                    </v-img>
+   <br><br>
       </v-flex>
 
             <v-card> 

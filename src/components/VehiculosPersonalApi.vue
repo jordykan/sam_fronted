@@ -39,7 +39,7 @@
       </template>
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Embarque de Personal y Pasajeros</v-toolbar-title>
+          <v-toolbar-title>Vehiculos y Personal</v-toolbar-title>
           <v-divider
             class="mx-4"
             inset
@@ -502,6 +502,9 @@
         </v-toolbar>
       </template>
        <template v-slot:item.fecha="{ item }">{{ item.fecha.join(' al ')}}</template>
+       <template v-slot:item.folio="{ item }">
+        VP{{item.counter}}
+      </template>
 
       <template v-slot:item.action="{ item }">
       
@@ -611,7 +614,7 @@ import emailjs from "emailjs-com";
                { text: 'Solicitante', value: 'usuario[0].nombre', sortable:true},
                { text: 'Fecha', value: 'fecha', sortable:true},
                { text: 'Embarcacion', value: 'embarcacion.nombre',sortable:false},
-               { text: 'Muelle', value: 'muelle', sortable:false},
+               { text: 'Folio', value: 'folio', sortable:false},
                { text: 'Manifiesto', value: 'manifiesto',sortable:false}, 
                { text: 'Adjuntos del Personal', value: 'personal_adj',sortable:false},
                { text: 'Adjuntos del Vehiculo', value: 'vehiculos_adj',sortable:false},  

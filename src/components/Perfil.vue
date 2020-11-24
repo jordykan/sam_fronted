@@ -1,7 +1,120 @@
 <template>
   <v-layout align-start>
     <v-flex>
-        <h3>En construcción</h3>
+       
+
+        <template>
+  <v-card
+    :loading="loading"
+    class="my-5"
+    max-width="374"
+  >
+    <template slot="progress">
+      <v-progress-linear
+        color="deep-purple"
+        height="10"
+        indeterminate
+      ></v-progress-linear>
+    </template>
+      <v-row justify="center">
+            <v-menu
+              bottom
+              min-width="200px"
+              rounded
+              offset-y
+            >
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  icon
+                  x-large
+                  v-on="on"
+                >
+                  <v-avatar
+                    color="brown"
+                    size="48"
+                  >
+                    <span class="white--text headline"></span>
+                  </v-avatar>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-list-item-content class="justify-center">
+                  <div class="mx-auto text-center">
+                    <v-avatar
+                      color="brown"
+                    >
+                      <span class="white--text headline"></span>
+                    </v-avatar>
+                   
+                  </div>
+                </v-list-item-content>
+              </v-card>
+            </v-menu>
+          </v-row>
+
+    <v-card-title>{{usuario.nombre}}</v-card-title>
+
+    <v-card-text>
+      <v-row
+        align="center"
+        class="mx-0"
+      >
+     
+        <div class="grey--text ml-4">
+         Dirección: <strong> {{usuario.direccion}}</strong>
+        </div>
+      
+      </v-row>
+            <v-row
+        align="center"
+        class="mx-0"
+      >
+     
+        <div class="grey--text ml-4">
+         Correo: <strong> {{usuario.email}}</strong>
+        </div>
+      
+      </v-row>
+
+            <v-row
+        align="center"
+        class="mx-0"
+      >
+     
+        <div class="grey--text ml-4">
+         Dirección: <strong> {{usuario.direccion}}</strong>
+        </div>
+      
+      </v-row>
+
+
+
+      <div class="my-4 subtitle-1">
+       <strong>{{usuario.email}}</strong>
+      </div>
+
+      <div>{{usuario.telefono}}</div>
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-title></v-card-title>
+
+    <v-card-text>
+ 
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="deep-purple lighten-2"
+        text
+        @click="reserve"
+      >
+        Cambiar contraseña
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</template>
     </v-flex>
   </v-layout>
 </template>
@@ -21,21 +134,11 @@ export default {
       dialog: false,
       search: "",
       pasajeros: [],
-      headers: [
-        { text: "Actions", value: "action", sortable: false },
-        { text: "RFC", value: "rfc", sortable: true },
-        { text: "Nombre Completo", value: "nombre_completo", sortable: true },
-        {
-          text: "Numero de Libreta de Mar",
-          value: "numero_libreta",
-          sortable: true
-        },
-        { text: "Numero de Seguro Social", value: "nss", sortable: false },
-        { text: "Compania", value: "compania", sortable: true },
-        { text: "Puesto", value: "puesto", sortable: true }
-      ],
+      inicial : '',
       editedIndex: -1,
       _id: "",
+      email:'',
+      usuario:[],
       nombre_completo: "",
       rfc: "",
       numero_libreta: "",
@@ -183,20 +286,15 @@ export default {
       }
     },
     listar() {
-      let header = { Token: this.$store.state.token };
-      let configuracion = { headers: header };
-      let me = this;
-      axios
-        .get(
-          "pasajeros/list?agencia=" + this.$store.state.usuario.agencia,
-          configuracion
-        )
-        .then(function(response) {
-          me.pasajeros = response.data;
+        let header={"Token":this.$store.state.token};
+        let configuracion= {headers: header}
+        let me=this;
+        axios.get('usuario/query?_id='+this.$store.state.usuario._id,configuracion).then(function (response){
+          me.usuario=response.data;
+          console.log(me.usuario)
+        }).catch(function(error){
+          console.log(error)
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
 
     editItem(item) {

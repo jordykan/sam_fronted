@@ -829,7 +829,9 @@ seguridad, protección y ambiental, así como a resarcir cualquier daño que se 
 
         <template v-slot:item.eta="{ item }">{{ item.eta | moment("dddd Do MMMM YYYY, h:mm:ss a")}}</template>
         <template v-slot:item.etd="{ item }">{{ item.etd | moment("dddd Do MMMM YYYY, h:mm:ss a")}}</template>
-
+          <template v-slot:item.folio="{ item }">
+          SU{{item.folio_solicitud}}
+      </template>
         <template v-slot:no-data>
           <v-btn color="primary" @click="listar()">Resetear</v-btn>
         </template>
@@ -893,6 +895,7 @@ export default {
       headers: [
         { text: "Actions", value: "action", sortable: false },
         { text: "Solicitante", value: "usuario[0].nombre", sortable: true },
+        { text: "Folio", value: "folio", sortable: true },
         { text: "ETA", value: "eta", sortable: true },
         { text: "ETD", value: "etd", sortable: true },
         { text: "Procedencia", value: "procedencia", sortable: false },

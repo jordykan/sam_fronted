@@ -842,21 +842,9 @@
                         </v-btn>
                       </v-col>
                       <v-col cols="3">
-                        <input type="file" accept=".csv" id="csv" ref="csv" name="csv"  label="File input"/>
+                        <input type="file" accept=".csv" id="csv" v-on:change="csvfile()" ref="csv" name="csv"  label="File input"/>
                       </v-col>
-                       <v-col cols="3">
-                           <v-btn
-                              
-                              color="success"
-                               @click="readFile()"
-                            >
-                              <v-icon left>
-                                upload
-                              </v-icon>
-                              Cargar
-                            </v-btn>
-                           
-                      </v-col>
+                    
 
                      
                       <v-col cols="12" class="text--secondary">
@@ -921,7 +909,7 @@
           <v-flex xs12 sm2 md12 lg12 xl12>
             <template>
               <v-col cols="12" sm="12" md="12">
-                Adjunte los archivos o lista de de pasajeros :
+                Adjunte los archivos de identificación oficial conforme a la lista de pasajeros :
                 <br />
                 <input
                   type="file"
@@ -1247,7 +1235,7 @@ export default {
       );
     },
 
-     readFile() {
+     csvfile() {
             let me = this
             var file = this.$refs.csv.files[0]
             let pasajerosArray = []
@@ -1569,7 +1557,6 @@ printDiv() {
                     )
                     return false
                   }
-                  alert('Validacion pasada')
         if (me.file) {
           let file = me.file;
           let fileExtension = file.type.split("/")[1];

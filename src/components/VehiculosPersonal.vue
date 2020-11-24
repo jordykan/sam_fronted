@@ -1657,7 +1657,6 @@ import {required, email, minLength} from "vuelidate/lib/validators"
                     )
                     return false
                   }
-                  alert('Validacion pasada')
                 axios.post('vehiculoPersonal/add',
                  {
                     

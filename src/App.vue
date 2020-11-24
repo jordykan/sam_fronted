@@ -319,7 +319,7 @@
           
              <div class="block TutorialBlock">
                 <v-container>
-               <h2 class="text-center">Tutoriales</h2>
+               <h2 class="text-center">Videotutoriales</h2>
                <v-row>
                  <v-col cols="4">
               
@@ -406,7 +406,7 @@
                     <v-img
                       class="white--text align-end"
                       height="200px"
-                      :src="require('../src/assets/avp.jpeg')"
+                      src="https://i.ibb.co/4KnhtV9/gmgg.jpg"
                     >
                     </v-img>
 
