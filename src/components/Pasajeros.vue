@@ -48,7 +48,13 @@
                       </v-col>
 
                       <v-col cols="12" sm="12" md="12">
-                        <v-text-field v-model="nombre_completo" label="Nombre Completo"></v-text-field>
+                        <v-text-field v-model="nombre" label="Nombre"></v-text-field>
+                      </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                        <v-text-field v-model="apellidoPaterno" label="Apellido Paterno"></v-text-field>
+                      </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                        <v-text-field v-model="apellidoMaterno" label="Apellido Materno"></v-text-field>
                       </v-col>
 
                       <v-col cols="12" sm="12" md="12">
@@ -59,9 +65,7 @@
                         <v-text-field v-model="puesto" label="Puesto"></v-text-field>
                       </v-col>
 
-                      <v-col cols="12" sm="12" md="12">
-                        <v-text-field v-model="numero_libreta" label="N° Libreta de Mar"></v-text-field>
-                      </v-col>
+                   
                       <v-col cols="12" sm="12" md="12">
                         <v-text-field v-model="nss" label="Numero de Seguro Social"></v-text-field>
                       </v-col>
@@ -137,19 +141,18 @@ export default {
       headers: [
         { text: "Actions", value: "action", sortable: false },
         { text: "RFC", value: "rfc", sortable: true },
-        { text: "Nombre Completo", value: "nombre_completo", sortable: true },
-        {
-          text: "Numero de Libreta de Mar",
-          value: "numero_libreta",
-          sortable: true
-        },
+        { text: "Nombre", value: "nombre", sortable: true },
+        { text: "Apellido Paterno", value: "apellidoPaterno", sortable: true },
+         { text: "Apellidpo Materno", value: "apellidoMaterno", sortable: true },
         { text: "Numero de Seguro Social", value: "nss", sortable: false },
         { text: "Compania", value: "compania", sortable: true },
         { text: "Puesto", value: "puesto", sortable: true }
       ],
       editedIndex: -1,
       _id: "",
-      nombre_completo: "",
+      nombre: "",
+      apellidoPaterno:'',
+      apellidoMaterno:'',
       rfc: "",
       numero_libreta: "",
       nss: "",
@@ -194,7 +197,7 @@ export default {
       if (this.rfc.length < 1) {
         this.validaMensaje.push("El RFC es obligatorio");
       }
-      if (this.nombre_completo.length < 1) {
+      if (this.nombre.length < 1) {
         this.validaMensaje.push("El Nombre completo es obligatorio");
       }
       if (this.numero_libreta.length < 1) {
@@ -213,7 +216,7 @@ export default {
     limpiar() {
       (this._id = ""),
         (this.rfc = ""),
-        (this.nombre_completo = ""),
+        (this.nombre = ""),
         (this.numero_libreta = ""),
         (this.nss = ""),
         this.compania="",
@@ -234,8 +237,9 @@ export default {
             {
               _id: this._id,
               rfc: this.rfc,
-              nombre_completo: this.nombre_completo,
-              numero_libreta: this.numero_libreta,
+              nombre: this.nombre,
+              apellidoPaterno: this.apellidoPaterno,
+              apellidoMaterno: this.apellidoMaterno,
               nss: this.nss,
               compania: this.compania,
               puesto: this.puesto
@@ -269,8 +273,9 @@ export default {
             {
               agencia: this.$store.state.usuario.agencia,
               rfc: this.rfc,
-              nombre_completo: this.nombre_completo,
-              numero_libreta: this.numero_libreta,
+              nombre: this.nombre,
+              apellidoPaterno: this.apellidoPaterno,
+              apellidoMaterno: this.apellidoMaterno,
               nss: this.nss,
               compania: this.compania,
               puesto: this.puesto
@@ -317,8 +322,9 @@ export default {
     editItem(item) {
       this._id = item._id;
       this.rfc = item.rfc;
-      this.nombre_completo = item.nombre_completo;
-      this.numero_libreta = item.numero_libreta;
+      this.nombre = item.nombre;
+      this.apellidoMaterno = item.apellidoMaterno
+      this.apellidoPaterno = item.apellidoPaterno
       this.nss = item.nss;
       (this.compania = item.compania), (this.puesto = item.puesto);
       this.editedIndex = 1;
@@ -349,7 +355,7 @@ export default {
 
     activarDesactivarMostrar(accion, item) {
       this.adModal = 1;
-      this.adNombre = item.nombre_completo;
+      this.adNombre = item.nombre;
       this.adId = item._id;
       if (accion == 1) {
         this.adAccion = 1;

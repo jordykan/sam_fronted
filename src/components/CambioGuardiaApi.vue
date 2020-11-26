@@ -444,7 +444,7 @@
                             <td
                               id="texto"
                               style="border: 1px solid #000000;text-align:center"
-                            >{{det.nombreCompleto}}</td>
+                            >{{det.nombre}}{{det.apellidoPaterno}}&nbsp;{{det.apellidoMaterno}}</td>
                             <td
                               id="texto"
                               style="border: 1px solid #000000; text-align:center"

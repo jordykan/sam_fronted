@@ -336,7 +336,7 @@
                             <td
                               id="texto"
                               style="border: 1px solid #000000;text-align:center"
-                            >{{det.nombreCompleto}}</td>
+                            >{{det.nombre}}{{det.apellidoPaterno}}&nbsp;{{det.apellidoMaterno}}</td>
                             <td
                               id="texto"
                               style="border: 1px solid #000000; text-align:center"
@@ -530,7 +530,6 @@
                         <tbody>
                           <tr v-for="(det, index) in pasajeros" :key="det._id">
                             <td>{{index+1}}</td>
-
                             <td>{{det.nombreCompleto}}</td>
                             <td>{{det.rfc}}</td>
                             <td>{{det.identificacion}}</td>
@@ -859,11 +858,15 @@
                               <v-text-field v-model="props.items.rfc"></v-text-field>
                             </td>
                             <td class="text-xs-center">
-                              <v-text-field v-model="props.items.nombreCompleto"></v-text-field>
+                              <v-text-field v-model="props.items.nombre"></v-text-field>
                             </td>
-                            <td class="text-xs-center">
-                              <v-text-field v-model="props.items.identificacion"></v-text-field>
+                               <td class="text-xs-center">
+                              <v-text-field v-model="props.items.apellidoPaterno"></v-text-field>
                             </td>
+                               <td class="text-xs-center">
+                              <v-text-field v-model="props.items.apellidoMaterno"></v-text-field>
+                            </td>
+                         
                             <td class="text-xs-center">
                               <v-text-field v-model="props.items.nss"></v-text-field>
                             </td>
@@ -1057,7 +1060,9 @@ export default {
       cabeceraDetalles: [
         { text: "Borrar", value: "borrar", sortable: false },
         { text: "RFC", value: "rfc" },
-        { text: "Nombre Completo", value: "nombreCompleto" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Apellido Paterno", value: "apellidoPaterno" },
+        { text: "Apellido Materno", value: "apellidoMaterno" },
         { text: "Compañia", value: "compania" },
         { text: "Puesto", value: "puesto" },
         { text: "Destino/Procedencia", value: "destino" }
@@ -1072,12 +1077,10 @@ export default {
       cabeceraPasajeros: [
         { text: "Seleccion", value: "action", sortable: false },
         { text: "RFC", value: "rfc", sortable: true },
-        { text: "Nombre Completo", value: "nombre_completo", sortable: true },
-        {
-          text: "Numero de Libreta de Mar",
-          value: "numero_libreta",
-          sortable: true
-        },
+        { text: "Nombre", value: "nombre", sortable: true },
+        { text: "Apellido Paterno", value: "apellidoPaterno", sortable: true },
+        { text: "Apellido Materno", value: "apellidoMaterno", sortable: true },
+      
         { text: "Numero de Seguro Social", value: "nss", sortable: false }
       ],
       submited:false,
@@ -1449,8 +1452,9 @@ printDiv() {
       } else {
         this.pasajeros.push({
           rfc: data.rfc,
-          nombreCompleto: data.nombre_completo,
-          identificacion: data.numero_libreta,
+          nombre: data.nombre,
+          apellidoPaterno: data.apellidoPaterno,
+          apellidoMaterno: data.apellidoMaterno,
           nss: data.nss,
           compania: data.compania,
           puesto: data.puesto,

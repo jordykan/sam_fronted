@@ -1,5 +1,9 @@
+
 <template >
+  
   <v-app id="app" >
+     
+
     <v-navigation-drawer
       fixed
       v-model="drawer"
@@ -225,6 +229,8 @@
           </v-list-item>
         </template>
       </v-list>
+
+      
     </v-navigation-drawer>
     
 
@@ -512,6 +518,8 @@
 </template>
 
 <script>
+ 
+
 "use strict";
  import { mdbFooter, mdbContainer, mdbRow, mdbCol } from 'mdbvue';
 export default {
