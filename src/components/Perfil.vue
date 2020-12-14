@@ -4,8 +4,45 @@
        
 
         <template>
+             <v-dialog v-model="dialog" max-width="500px">
+            
+              <v-card>
+                <v-card-title>
+                  <span class="headline">{{ formTitle }}</span>
+                </v-card-title>
+
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                    
+                      <v-col cols="12" sm="12" md="12">
+                        <v-text-field v-model="password" type="password" label="Password" id="password" name="password" class="form-control" :class="{ 'is-invalid': submited && $v.password.$error }" ></v-text-field>
+                               <div v-if="submited && $v.password.$error" class="invalid-feedback">
+                                    <span style="color:#FF0000" v-if="!$v.password.required">Contraseña es requerida</span>
+                                    <span style="color:#FF0000" v-if="!$v.password.minLength">Contraseña debe tener mas de 8 caracteres</span>
+                                </div> 
+                      </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                        <v-text-field v-model="repeatPassword" type="password" label="Confirmar Password" ></v-text-field>
+                          <div v-if="submited && $v.repeatPassword.$error">
+                                  <h4 v-if="!$v.repeatPassword.sameAsPassword" style="color:#FF0000"> <strong style="color:#FF0000">Error</strong> Contraseña no coincide</h4>
+                               
+                              </div>   
+                      </v-col>
+                  
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+                  <v-btn color="blue darken-1" text @click="guardar">Guardar</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
   <v-card
-    :loading="loading"
+   
     class="my-5"
     max-width="374"
   >
@@ -73,27 +110,24 @@
         <div class="grey--text ml-4">
          Correo: <strong> {{usuario.email}}</strong>
         </div>
-      
+     
       </v-row>
 
-            <v-row
+           <v-row
         align="center"
         class="mx-0"
       >
      
         <div class="grey--text ml-4">
-         Dirección: <strong> {{usuario.direccion}}</strong>
+         Telefono: <strong> {{usuario.telefono}}</strong>
         </div>
-      
+     
       </v-row>
 
 
 
-      <div class="my-4 subtitle-1">
-       <strong>{{usuario.email}}</strong>
-      </div>
+     
 
-      <div>{{usuario.telefono}}</div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -105,13 +139,19 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn
+      
+      
+           <v-btn
         color="deep-purple lighten-2"
         text
-        @click="reserve"
+        @click="editItem()"
       >
         Cambiar contraseña
       </v-btn>
+       
+        
+    
+   
     </v-card-actions>
   </v-card>
 </template>
@@ -121,13 +161,24 @@
 <script>
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css"; // Ensure you are using css-loader
-
+import { required, sameAs, minLength } from 'vuelidate/lib/validators'
 import swal from 'sweetalert'
 
 export default {
   components: {},
   icons: {
     iconfont: "fa4"
+  },
+  validations:{
+    password:{
+      required,
+      minLength: minLength(8)
+    },
+    repeatPassword:{
+      required,
+      sameAsPassword: sameAs('password')
+    }
+
   },
   data() {
     return {
@@ -136,6 +187,9 @@ export default {
       pasajeros: [],
       inicial : '',
       editedIndex: -1,
+      submited:false,
+      password:'',
+      repeatPassword:'',
       _id: "",
       email:'',
       usuario:[],
@@ -162,7 +216,7 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "Nuevo Pasajero" : "Nueva Embarcación";
+      return this.editedIndex === -1 ? "Nuevo Pasajero" : "Cambiar Contraseña";
     }
   },
 
@@ -213,27 +267,27 @@ export default {
       let me = this;
       let header = { Token: this.$store.state.token };
       let configuracion = { headers: header };
-
     
       if (this.editedIndex > -1) {
+                  this.submited = true
+                  this.$v.$touch();
+                  if(this.$v.$invalid){
+                   
+                    return false
+                  }
         axios
           .put(
-            "pasajeros/update",
+            "usuario/updatePassword",
             {
-              _id: this._id,
-              rfc: this.rfc,
-              nombre_completo: this.nombre_completo,
-              numero_libreta: this.numero_libreta,
-              nss: this.nss,
-              compania: this.compania,
-              puesto: this.puesto
+              _id: this.$store.state.usuario._id,
+              password: this.password
             },
             configuracion
           )
           .then(function(response) {
             swal(
-              "Pasajero actualizado",
-              "Pasajero actualizado exitosamente",
+              "Contraseña actualizada",
+              "Contraseña Actualizada",
               "success"
             )
             me.limpiar();
@@ -244,24 +298,27 @@ export default {
            me.close,
            swal(
              "Error",
-             "Verifique los datos ingresado",
+             "Verifique los datos ingresado"+error,
              "error"
            )
           });
       } else {
         //Nuevo
-
+                  this.submited = true
+                  this.$v.$touch();
+                  if(this.$v.$invalid){
+                    swal(
+                      "Error",
+                      "Verifique los datos",
+                      "error"
+                    )
+                    return false
+                  }
         axios
           .post(
-            "pasajeros/add",
+            "usuario/updatePassword",
             {
-              agencia: this.$store.state.usuario.agencia,
-              rfc: this.rfc,
-              nombre_completo: this.nombre_completo,
-              numero_libreta: this.numero_libreta,
-              nss: this.nss,
-              compania: this.compania,
-              puesto: this.puesto
+              password: this.password,
             },
             configuracion
           )
@@ -297,15 +354,9 @@ export default {
         })
     },
 
-    editItem(item) {
-      this._id = item._id;
-      this.rfc = item.rfc;
-      this.nombre_completo = item.nombre_completo;
-      this.numero_libreta = item.numero_libreta;
-      this.nss = item.nss;
-      (this.compania = item.compania), (this.puesto = item.puesto);
+ editItem() {
+     
       this.editedIndex = 1;
-
       this.dialog = true;
     },
 

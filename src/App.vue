@@ -336,7 +336,7 @@
                     <v-img
                       class="white--text align-end"
                       height="200px"
-                     :src="require('../src/assets/su.jpeg')"
+                     src="https://i.ibb.co/JdnVcXq/su.jpg"
                     >
                      
                     </v-img>
@@ -374,7 +374,7 @@
                     <v-img
                       class="white--text align-end"
                       height="200px"
-                      :src="require('../src/assets/cg.jpeg')"
+                      src="https://i.ibb.co/9YPQp8F/cg.jpg"
                     >
                      
                     </v-img>

@@ -1046,7 +1046,7 @@ export default {
       modal: false,
       menu2: false,
       alert: false,
-
+      
       nombreCompleto: "",
       agencias: [],
       nombre: "",
@@ -1551,7 +1551,7 @@ printDiv() {
             me.ocultarNuevo();
           });
       } else {
-          this.submited = true
+                  this.submited = true
                   this.$v.$touch();
                   if(this.$v.$invalid){
                     swal(
