@@ -490,6 +490,9 @@
                           </tr>
                         </tbody>
                       </table>
+                    <br>
+                    Aprobación AMLS: <label id="texto">{{aprobacionAmls}}</label> <br>
+                    Aprobación APITAB: <label id="texto">{{aprobacionApi}}</label> 
                     </div>
                   </div>
               </v-card-text>

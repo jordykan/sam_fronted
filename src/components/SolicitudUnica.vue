@@ -323,7 +323,7 @@ seguridad, protección y ambiental, así como a resarcir cualquier daño que se 
                                             />
                                           <input
                                           v-if="!check2"
-                                            type="checkbox"
+                                            type="checkbox" 
                                             name="optiona"
                                             id="opta"
                                           />
@@ -869,6 +869,7 @@ seguridad, protección y ambiental, así como a resarcir cualquier daño que se 
         >
           text_snippet
         </v-icon>
+      
 
       </template>
       
@@ -1488,6 +1489,7 @@ import {required, email, minLength} from "vuelidate/lib/validators"
          
 
         created () {
+          console.log(this.$store.state.usuario.telefono)
           this.listar();
           this.selectEmbarcaciones();
           this.selectAgencias();
@@ -1522,6 +1524,33 @@ import {required, email, minLength} from "vuelidate/lib/validators"
                         }
                         
                        emailjs.send("gmail","solicitudUnica", template_params)
+                        .then(function(response) {
+                            if(response.text === 'OK'){
+                              
+                              
+                            }
+                           console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
+                        }, function(err) {
+                            alert('Ocurrió un problema al enviar el correo');
+                           console.log("FAILED. error=", err);
+                        });
+                
+           },
+
+            enviarSms(embarcacion,solicitante,detalles,muelle,status,telefono){
+                 
+
+                        var template_params = {
+                          "embarcacion": embarcacion,
+                          "solicitante": solicitante,
+                          "detalles" : detalles,
+                        
+                          "muelle": muelle,
+                          "status":status,
+                          "telefono":telefono,
+                        }
+                        
+                       emailjs.send("gmail","solicitudUnicaSms", template_params)
                         .then(function(response) {
                             if(response.text === 'OK'){
                               
@@ -1895,7 +1924,9 @@ import {required, email, minLength} from "vuelidate/lib/validators"
                       "La solicitud unica ha sido agregada exitosamente",
                       "success"
                     )
-                 me.listarEmbarcacion(me.$store.state.usuario.email,response.data.embarcacion,response.data.procedencia,me.$store.state.usuario.nombre,response.data.comentarios, moment(response.data.eta).format('MMMM Do YYYY, h:mm a'), moment(response.data.etd).format('MMMM Do YYYY, h:mm a'),response.data.muelle,response.data.estado)
+                // me.listarEmbarcacion(me.$store.state.usuario.email,response.data.embarcacion,response.data.procedencia,me.$store.state.usuario.nombre,response.data.comentarios, moment(response.data.eta).format('MMMM Do YYYY, h:mm a'), moment(response.data.etd).format('MMMM Do YYYY, h:mm a'),response.data.muelle,response.data.estado)
+                 console.log(me.$store.state.usuario.telefono)
+                 me.listarSms(response.data.embarcacion,me.$store.state.usuario.nombre,response.data.comentarios,response.data.muelle,response.data.estado,me.$store.state.usuario.telefono)
                  me.limpiar();
                me.close();
                     me.ocultarNuevo();
@@ -1953,6 +1984,26 @@ import {required, email, minLength} from "vuelidate/lib/validators"
               status = 'confirmado'
             }
             me.enviar(correo,embarcacion,procedencia,usuario,detalles,eta,etd,muelle,status)
+            }).catch(function(error){
+              console.log(error)
+            })
+          },
+
+           listarSms(embarcacion,usuario,detalles,muelle,estado,telefono){
+            let header={"Token":this.$store.state.token};
+            let me=this;
+            
+            let configuracion= {headers: header}
+            axios.get('embarcacion/query?_id='+embarcacion,configuracion).then(function (response){
+            embarcacion=response.data;
+            console.log(embarcacion)
+            let status
+            if(estado==0){
+              status = 'en proceso'
+            }else if(estado==1){
+              status = 'confirmado'
+            }
+            me.enviarSms(embarcacion,usuario,detalles,muelle,status,telefono)
             }).catch(function(error){
               console.log(error)
             })

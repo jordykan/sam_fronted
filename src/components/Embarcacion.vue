@@ -454,6 +454,7 @@ export default {
     listar() {
       let header = { Token: this.$store.state.token };
       let configuracion = { headers: header };
+      console.log(configuracion)
       let me = this;
 
       axios
@@ -523,10 +524,9 @@ export default {
     },
     activar() {
       let me = this;
-      let header = { Token: this.$store.state.token };
-      let configuracion = { headers: header };
+     
       axios
-        .put("embarcacion/activate", { _id: this.adId }, configuracion)
+        .put("embarcacion/activate", { _id: this.adId })
         .then(function(response) {
           (me.adModal = 0),
             (me.adAccion = 0),

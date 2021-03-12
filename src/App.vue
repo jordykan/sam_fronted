@@ -76,6 +76,17 @@
           </v-list-item>
         </template>
 
+            <template v-if="esAdministrador">
+          <v-list-item :to="{name: 'pspcosteoregistro'}">
+            <v-list-item-action>
+              <v-icon>engineering</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>PSP Costeo</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+
         <template v-if="esAdministrador">
           <v-list-item :to="{name: 'bitacora'}">
             <v-list-item-action>
@@ -110,6 +121,7 @@
           </v-list-item>
         </template>
 
+
         <template v-if="esAPITAB">
           <v-list-item :to="{name: 'solicitud_apitab'}">
             <v-list-item-action>
@@ -120,6 +132,8 @@
             </v-list-item-content>
           </v-list-item>
         </template>
+
+        
 
         <template v-if="esAPITAB">
           <v-list-item :to="{name: 'cambio_guardia_api'}">
@@ -145,6 +159,21 @@
           </v-list-item>
         </template>
 
+       
+
+         <template v-if="esAPITAB">
+          <v-list-item :to="{name: 'pspcosteo'}">
+            <v-list-item-action>
+              <v-icon>engineering</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>PSP Costeo</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+
+          
+
         <template v-if="esAdministrador">
           <v-list-item :to="{name: 'agencia'}">
             <v-list-item-action>
@@ -155,17 +184,7 @@
             </v-list-item-content>
           </v-list-item>
         </template>
-         <template v-if="esAdministrador">
-          <v-list-item :to="{name: 'test'}">
-            <v-list-item-action>
-              <v-icon>test</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Test</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-
+       
         <template v-if="esCliente">
           <v-list-item :to="{name: 'solicitud_unica'}">
             <v-list-item-action>
@@ -186,7 +205,7 @@
           </v-list-item>
         </template>
 
-        <template v-if="esCliente">
+        <template v-if="esCliente || esPSP" >
           <v-list-item :to="{name: 'vehiculos_personal'}">
             <v-list-item-action>
               <v-icon>local_shipping</v-icon>
@@ -216,6 +235,14 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Usuarios</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+           <v-list-item :to="{name: 'altapsp'}">
+            <v-list-item-action>
+              <v-icon>manage_accounts</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Alta PSP</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -556,6 +583,11 @@ export default {
     esAPITAB() {
       return (
         this.$store.state.usuario && this.$store.state.usuario.rol == "APITAB"
+      );
+    },
+     esPSP() {
+      return (
+        this.$store.state.usuario && this.$store.state.usuario.rol == "PSP"
       );
     }
   },

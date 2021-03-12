@@ -18,7 +18,7 @@
           <v-chip small class="ma-2" color="primary" text-color="white" v-if="item.estado==1">
             <v-avatar left>
               <v-icon small>done</v-icon>
-            </v-avatar>Aprobado
+            </v-avatar>Aprobado AMLS
           </v-chip>
 
           <v-chip small class="ma-2" color="success" text-color="white" v-if="item.estado==3">

@@ -27,8 +27,7 @@
         </template>
         <v-date-picker
           v-model="mesCaptura"
-                                    v-on:change="embarcacionChange()"
-
+          v-on:change="embarcacionChange()"
           @input="menu2 = false"
         ></v-date-picker>
       </v-menu>
@@ -37,8 +36,8 @@
                     <v-col cols="3" sm="3" md="3">
                         <v-autocomplete  
                           v-on:change="embarcacionChange()"
-                        v-model="embarcacion" 
-                        :items="embarcaciones"
+                          v-model="embarcacion" 
+                          :items="embarcaciones"
                           label="Embarcacion"></v-autocomplete>
                     </v-col>
                     <v-col cols="3" sm="3" md="3">

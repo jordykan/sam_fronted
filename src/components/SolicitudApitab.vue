@@ -18,7 +18,7 @@
           <v-chip small class="ma-2" color="primary" text-color="white" v-if="item.estado==1">
             <v-avatar left>
               <v-icon small>done</v-icon>
-            </v-avatar>Aprobado
+            </v-avatar>Aprobado AMLS
           </v-chip>
 
           <v-chip small class="ma-2" color="success" text-color="white" v-if="item.estado==3">
@@ -787,7 +787,6 @@ seguridad, protección y ambiental, así como a resarcir cualquier daño que se 
                                 </tr>
                                 <tr>
                                    
-                                   <td ></td>
                                 </tr>
                                 
 
@@ -798,11 +797,14 @@ seguridad, protección y ambiental, así como a resarcir cualquier daño que se 
                        
 
                   </div>
+
+              
                           
               </div>
    
                    
-                         
+                            Aprobación AMLS <label id="texto">{{aprobacionAmls}}</label> <br>
+                 Aprobación API <label id="texto">{{aprobacionApi}}</label>
           </div>
  
       </div> 
@@ -894,7 +896,7 @@ export default {
       solicitudUnica: [],
       headers: [
         { text: "Actions", value: "action", sortable: false },
-        { text: "Solicitante", value: "usuario[0].nombre", sortable: true },
+        { text: "Solicitante", value: "usuario[0].agencia.nombre", sortable: true },
         { text: "Folio", value: "folio", sortable: true },
         { text: "ETA", value: "eta", sortable: true },
         { text: "ETD", value: "etd", sortable: true },

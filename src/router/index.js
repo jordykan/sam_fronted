@@ -26,6 +26,9 @@ import Reportes from '../components/Reportes.vue'
 import Companias from '../components/Companias.vue'
 import BitacoraEmbarcaciones from '../components/BitacoraEmbarcaciones.vue'
 import Perfil from '../components/Perfil.vue'
+import PspCosteo from '../components/PspCosteo.vue'
+import pspCosteoRegistro from '../components/PspCosteoRegistro.vue'
+import altaPsp from '../components/AltaPsp.vue'
 
 Vue.use(Router)
 
@@ -40,7 +43,8 @@ var router = new Router({
       meta:{
         administrador:true,
         cliente:true,
-        apitab:true
+        apitab:true,
+        psp:true
       }
     },
     {
@@ -70,6 +74,22 @@ var router = new Router({
         administrador:true
       }
       
+    },
+    {
+      path: '/pspcosteo',
+      name: 'pspcosteo',
+      component: PspCosteo,
+      meta:{
+        apitab:true,
+      }
+    },
+    {
+      path: '/pspcosteoregistro',
+      name: 'pspcosteoregistro',
+      component: pspCosteoRegistro,
+      meta:{
+        administrador:true,
+      }
     },
     {
       path: '/reportes',
@@ -185,6 +205,14 @@ var router = new Router({
       }
     },
     {
+      path: '/altapsp',
+      name: 'altapsp',
+      component: altaPsp,
+      meta:{
+        administrador:true
+      }
+    },
+    {
       path: '/test',
       name: 'test',
       component: Test,
@@ -236,7 +264,8 @@ var router = new Router({
       name: 'vehiculos_personal',
       component: VehiculosPersonal,
       meta:{
-        cliente:true
+        cliente:true,
+        psp:true
       }
     },  
     {
@@ -275,6 +304,11 @@ router.beforeEach((to,from,next)=>{
 }
 else if(store.state.usuario && store.state.usuario.rol == 'APITAB'){
   if(to.matched.some(record => record.meta.apitab)){
+    next()
+  }   
+}
+else if(store.state.usuario && store.state.usuario.rol == 'PSP'){
+  if(to.matched.some(record => record.meta.psp)){
     next()
   }   
 }
